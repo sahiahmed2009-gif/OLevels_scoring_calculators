@@ -1,0 +1,62 @@
+def calculate_l1r5():
+    print("Welcome to the L1R5 Score Calculator!")
+
+    l1_grade = input("Enter your L1 grade (A1 to F9). Remember to use English/MTL as L1: ")
+
+    l1_points = convert_grade_to_points(l1_grade)
+
+    r5_grades = []
+    for i in range(5):
+        grade = input(f"Enter grade for R{i+1} (A1 to F9): ")
+        r5_grades.append(convert_grade_to_points(grade))
+
+    total_points = l1_points + sum(r5_grades)
+
+    print(f"Your total L1R5 score is: {total_points}")
+
+    bonus_points = calculate_bonus_points()
+
+    language_elective = input("Have you applied and been selected for the Chinese, Malay, or Tamil Language Elective Programme? (yes/no): ")
+    if language_elective.lower() == 'yes':
+        bonus_points += 2
+        print("Congratulations! You are eligible for the Language Elective Programme and receive an additional 2 bonus points.")
+    else:
+        print("You are not eligible for the Language Elective Programme point deduction.")
+
+    net_score = total_points - bonus_points
+    print(f"After applying bonus points, your net L1R5 score is: {net_score}")
+
+def convert_grade_to_points(grade):
+    points_mapping = {
+        'A1': 1, 'A2': 2, 'B3': 3, 'B4': 4,
+        'C5': 5, 'C6': 6, 'D7': 7, 'E8': 8,
+        'F9': 9
+    }
+    return points_mapping.get(grade.upper(), 0)
+
+def calculate_bonus_points():
+    bonus = 0
+    print("Enter your bonus points criteria:")
+
+    cca_grade = input("Enter your CCA grade (A1/A2, B3 to C6): ")
+    if cca_grade in ['A1', 'A2']:
+        bonus += 2
+    elif cca_grade in ['B3', 'B4', 'C5', 'C6']:
+        bonus += 1
+
+    higher_mtl = input("Did you pass Higher Mother Tongue (C6 and above)? (yes/no): ")
+    if higher_mtl.lower() == 'yes':
+        bonus += 2
+
+    affiliated_jc = input("Is your first/second choice an affiliated JC? (yes/no): ")
+    if affiliated_jc.lower() == 'yes':
+        bonus += 2
+
+    special_programme = input("Did you take a special language programme with a grade of C6 and above? (yes/no): ")
+    if special_programme.lower() == 'yes':
+        bonus += 2
+
+    return min(bonus, 4)
+
+if __name__ == "__main__":
+    calculate_l1r5()
