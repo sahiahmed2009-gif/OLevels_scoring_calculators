@@ -41,10 +41,6 @@ def calculate_bonus_points():
     if higher_mtl.lower() == 'yes':
         bonus += 2
 
-    affiliated_jc = input("Is your first/second choice an affiliated JC? (yes/no): ")
-    if affiliated_jc.lower() == 'yes':
-        bonus += 2
-
     special_programme = input("Did you take a special language programme with a grade of C6 and above? (yes/no): ")
     if special_programme.lower() == 'yes':
         bonus += 2
