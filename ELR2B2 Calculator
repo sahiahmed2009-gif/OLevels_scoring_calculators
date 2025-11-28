@@ -1,0 +1,47 @@
+def calculate_elr2b2():
+    print("Welcome to the ELR2B2 Score Calculator!")
+
+    EL = input("Enter your L grade (A1 to F9): ")
+
+    EL_points = convert_grade_to_points(EL)
+
+    r2_grades = []
+    for i in range(2):
+        grade = input(f"Enter grade for R{i+1} (A1 to F9): ")
+        r2_grades.append(convert_grade_to_points(grade))
+
+    b2_grades = []
+    for i in range(2):
+        grade = input(f"Enter grade for b{i+1} (A1 to F9): ")
+        b2_grades.append(convert_grade_to_points(grade))
+
+    total_points = EL_points + sum(r2_grades) + sum(b2_grades)
+
+    print(f"Your total ELR2B2 score is: {total_points}")
+
+    bonus_points = calculate_bonus_points()
+
+    net_score = total_points - bonus_points
+    print(f"After applying bonus points, your net L1R4 score is: {net_score}")
+
+def convert_grade_to_points(grade):
+    points_mapping = {
+        'A1': 1, 'A2': 2, 'B3': 3, 'B4': 4,
+        'C5': 5, 'C6': 6, 'D7': 7, 'E8': 8,
+        'F9': 9
+    }
+    return points_mapping.get(grade.upper(), 0)
+
+def calculate_bonus_points():
+    bonus = 0
+    print("Enter your bonus points criteria:")
+
+    cca_grade = input("Enter your CCA grade (A1/A2, B3 to C6): ")
+    if cca_grade in ['A1', 'A2']:
+        bonus += 2
+    elif cca_grade in ['B3', 'B4', 'C5', 'C6']:
+        bonus += 1
+    return min(bonus, 4)
+
+if __name__ == "__main__":
+    calculate_elr2b2()
