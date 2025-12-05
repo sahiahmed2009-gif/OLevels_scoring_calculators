@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Goal Countdown</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; }
+        h1 { color: #333; }
+        input { padding: 10px; width: 300px; margin-right: 10px; }
+        button { padding: 10px 20px; cursor: pointer; }
+        .result { margin-top: 20px; padding: 15px; background: #e2f0d9; border-radius: 8px; display: none; }
+        .result p { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>Goal Deadline Calculator</h1>
+
+    <form id="goalForm">
+        <label>Enter your goal and deadline (e.g. study:2025-12-30)</label><br><br>
+        <input type="text" id="userInput" required placeholder="goal:YYYY-MM-DD">
+        <button type="submit">Calculate</button>
+    </form>
+
+    <div class="result" id="result">
+        <p><strong>Goal:</strong> <span id="goal"></span></p>
+        <p><strong>Days Left:</strong> <span id="daysLeft"></span></p>
+        <p><strong>Pace:</strong> <span id="pace"></span></p>
+    </div>
+
+    <script>
+        const form = document.getElementById("goalForm");
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            const userInput = document.getElementById("userInput").value;
+            if(!userInput.includes(":")) {
+                alert("Please use the correct format: goal:YYYY-MM-DD");
+                return;
+            }
+
+            const [goal, deadlineStr] = userInput.split(":");
+            const deadline = new Date(deadlineStr.trim());
+            const today = new Date();
+            const timeLeft = deadline - today;
+
+            if (isNaN(deadline.getTime())) {
+                alert("Invalid date format. Use YYYY-MM-DD");
+                return;
+            }
+
+            const daysLeft = Math.ceil(timeLeft / (1000 * 60 * 60 * 24));
+
+            let pace;
+            if (daysLeft <= 0) pace = "The deadline has passed!";
+            else if (daysLeft <= 30) pace = "You should quickly do it!!!";
+            else if (daysLeft <= 90) pace = "Do it quickly but also perfectly";
+            else pace = "Do it slowly but also perfectly";
+
+            document.getElementById("goal").textContent = goal;
+            document.getElementById("daysLeft").textContent = daysLeft;
+            document.getElementById("pace").textContent = pace;
+            document.getElementById("result").style.display = "block";
+        });
+    </script>
+</body>
+</html>
